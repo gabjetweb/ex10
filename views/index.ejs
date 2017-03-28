@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>jettegabriel - exercice 09</title>
+  <title>jettegabriel - exercice 10</title>
 </head>
 <body>
-  <h1>jettegabriel - exercice 09</h1>
+  <h1>jettegabriel - exercice 10</h1>
     <form action="/adresse" method="POST">
     <input type="text" placeholder="Nom" name="nom"></br>
     <input type="text" placeholder="Prénom" name="prenom"></br>
@@ -17,11 +17,16 @@
   <ul class="adresse">
   <% for(var i=0; i<adresse.length; i++) {%>
     <li class="client">
-      <span>Nom : <%= adresse[i].nom %></span></br>
-      <span>Prénom :<%= adresse[i].prenom %></span></br>
-      <span>Téléphone : <%= adresse[i].telephone %></span></br>
-      <span>Code Postal : <%= adresse[i].codePostal %></span>
-    </li></br>
+        <form action="/modifier/<%= adresse[i] %>" method="POST"></br>
+        <input type="text" placeholder="nom" name="nom" value="<%= adresse[i].nom %>"></br>
+        <input type="text" placeholder="prenom" name="prenom" value="<%= adresse[i].prenom %>"></br>
+        <input type="text" placeholder="telephone" name="telephone" value="<%= adresse[i].telephone %>"></br>
+        <input type="text" placeholder="ville" name="ville" value="<%= adresse[i].ville %>"></br>
+        <input type="text" placeholder="codepostal" name="codepostal" value="<%= adresse[i].codepostal %>">
+        <button type="submit">Modifier</button>
+      </form>
+    </li>
+      <a href="/detruire/<%= adresse[i] %>">delete</a>
   <% } %>
   </ul>
   <script type="text/javascript" src="serveur.js"></script>
