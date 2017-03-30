@@ -3,33 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>jettegabriel - exercice 10</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="style.less">
 </head>
 <body>
   <h1>jettegabriel - exercice 10</h1>
-    <form action="/adresse" method="POST">
-    <input type="text" placeholder="Nom" name="nom"></br>
-    <input type="text" placeholder="Prénom" name="prenom"></br>
-    <input type="text" placeholder="Telephone" name="telephone"></br>
-    <input type="text" placeholder="Code postal" name="codePostal"></br>
-    <button type="submit">Soumettre</button>
+  <table class="tableau">
+  <form id="formulaire" action="/adresse" method="POST">
+  <tr>
+    <td><input id="nom" type="text" placeholder="Nom" name="nom"></td>
+    <td><input id="prenom" type="text" placeholder="Prénom" name="prenom"></td>
+    <td><input id="telephone" type="text" placeholder="Telephone" name="telephone"></td>
+    <td><input id="codePostal" type="text" placeholder="Code postal" name="codePostal"></td>
+    <td><input id="_id" type="text" placeholder="id" name="_id"></td>
+    <td><button type="submit">Soumettre</button>
+  </tr>
   </form>
+  </table>
 
-  <ul class="adresse">
   <% for(var i=0; i<adresse.length; i++) {%>
-    <li class="client">
-        <form action="/modifier/<%= adresse[i] %>" method="POST"></br>
-        <input type="text" placeholder="nom" name="nom" value="<%= adresse[i].nom %>"></br>
-        <input type="text" placeholder="prenom" name="prenom" value="<%= adresse[i].prenom %>"></br>
-        <input type="text" placeholder="telephone" name="telephone" value="<%= adresse[i].telephone %>"></br>
-        <input type="text" placeholder="ville" name="ville" value="<%= adresse[i].ville %>"></br>
-        <input type="text" placeholder="codepostal" name="codepostal" value="<%= adresse[i].codepostal %>">
-        <button type="submit">Modifier</button>
-      </form>
-    </li>
-      <a href="/detruire/<%= adresse[i] %>">delete</a>
+    <table class="tableau" contenteditable="true">
+      <tr>
+        <td class="nom"><%= adresse[i].nom %></td>
+        <td class="prenom"><%= adresse[i].prenom %></td>
+        <td class="telephone"><%= adresse[i].telephone %></td>
+        <td class="codePostal"><%= adresse[i].codePostal %></td>
+        <td class="_id" contenteditable="false"><%= adresse[i]._id %></td>
+      <td contenteditable="false"><a href="/detruire/<%= adresse[i]._id %>">delete</a></td>
+      <td class='modifier' contenteditable="false"><a href="#">modify</a></td>
+      </tr>
+    </table>
   <% } %>
-  </ul>
-  <script type="text/javascript" src="serveur.js"></script>
+
+<script type="text/javascript">
+  
+var elmModifier = document.getElementsByClassName('modifier')
+
+for (var k=0 ;k<elmModifier.length; k++)
+{
+    elmModifier[k].addEventListener('click', function(){
+    var elmLigne = this.parentNode;
+
+      document.getElementById("nom").value = elmLigne.getElementsByClassName("nom")[0].innerHTML;
+      document.getElementById("prenom").value = elmLigne.getElementsByClassName("prenom")[0].innerHTML;
+      document.getElementById("telephone").value = elmLigne.getElementsByClassName("telephone")[0].innerHTML;
+      document.getElementById("codePostal").value = elmLigne.getElementsByClassName("codePostal")[0].innerHTML;
+      document.getElementById("_id").value = elmLigne.getElementsByClassName("_id")[0].innerHTML;
+
+    var elmForm = document.getElementById("formulaire");
+    elmForm.submit();
+
+  })
+}
+</script>  
 
 </body>
 </html>

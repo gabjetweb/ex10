@@ -1,6 +1,7 @@
 const express = require('express');
-const bodyParser= require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+const bodyParser= require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 const app = express();
 app.set('view engine', 'ejs'); // générateur de template 
 app.use(bodyParser.urlencoded({extended: true}))
@@ -28,10 +29,47 @@ app.get('/',  (req, res) => {
 })
 
 app.post('/adresse',  (req, res) => {
-  db.collection('adresse').save(req.body, (err, result) => {
-      if (err) return console.log(err)
-      console.log('sauvegarder dans la BD')
-      res.redirect('/')
-    })
+
+  console.log(req.body._id);
+
+     var ajoutAdresse={};
+    //var 
+
+    if(req.body._id !="")
+    {
+      ajoutAdresse['_id']=ObjectID(req.body._id);
+    }
+
+    ajoutAdresse["nom"] = req.body.nom;
+    ajoutAdresse["prenom"] = req.body.prenom;
+    ajoutAdresse["telephone"] = req.body.telephone;
+    ajoutAdresse["codePostal"] = req.body.codePostal;
+
+
+        db.collection('adresse').save(ajoutAdresse, (err, result) => {
+        if (err) return console.log(err)
+        console.log('sauvegarder dans la BD')
+        res.redirect('/')
+      })
 })
+
+app.get('/detruire/:id', (req, res) => {
+ var id = req.params.id
+ console.log(id)
+ db.collection('adresse').findOneAndDelete({"_id": ObjectID(req.params.id)}, (err, resultat) => {
+ if (err) return console.log(err)
+ res.redirect('/')  // redirige vers la route qui affiche la collection
+ })
+})
+
+app.get('/modifier/:id', (req, res) =>{
+  var id = req.params.id
+  console.log(id)
+  //console.log("ca se passe")
+  console.log(req.params.prenom);
+ //db.collection('adresse').save({"prenom":req.params.prenom,"nom":req.params.nom,"telephone":req.params.telephone,"codePostal":ObjectID(req.params.codePostal),"_id": ObjectID(req.params.id)}, (err, resultat) => {
+  //if (err) return console.log(err)
+ res.redirect('/')  // redirige vers la route qui affiche la collection
+//})
+});
 
