@@ -43,6 +43,7 @@ app.post('/adresse',  (req, res) => {
     ajoutAdresse["nom"] = req.body.nom;
     ajoutAdresse["prenom"] = req.body.prenom;
     ajoutAdresse["telephone"] = req.body.telephone;
+    ajoutAdresse["ville"] = req.body.ville;
     ajoutAdresse["codePostal"] = req.body.codePostal;
 
 
@@ -62,14 +63,4 @@ app.get('/detruire/:id', (req, res) => {
  })
 })
 
-app.get('/modifier/:id', (req, res) =>{
-  var id = req.params.id
-  console.log(id)
-  //console.log("ca se passe")
-  console.log(req.params.prenom);
- //db.collection('adresse').save({"prenom":req.params.prenom,"nom":req.params.nom,"telephone":req.params.telephone,"codePostal":ObjectID(req.params.codePostal),"_id": ObjectID(req.params.id)}, (err, resultat) => {
-  //if (err) return console.log(err)
- res.redirect('/')  // redirige vers la route qui affiche la collection
-//})
-});
 
